@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
+
+# Віртуальне середовище
+venv/
+.env/
+.venv/
+.venv
+
+# Файли налаштувань середовища
+.env
+.env/
+.env.*
+
+# Логи
+*.log
+
+# Конфігурації IDE
+.vscode/
+.idea/
+.idea
+*.iml
+
+# Google API credentials, OpenAI keys
+credentials.json
+token.json
+*.key
+*.pem
+
+# Інші тимчасові файли
+.DS_Store
+Thumbs.db
+
+dogwood-concept-465913-k4-f8071d1e64fe
