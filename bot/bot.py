@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from llm.llm_answer import get_llm_answer
 from llm.llm_detect_booking_intent import detect_booking_intent
 from booking.calendar_api import list_free_slots, create_appointment
-from bot_utils import parse_date_range, format_slots, EMAIL_REGEX
+from .bot_utils import parse_date_range, format_slots, EMAIL_REGEX
 
 
 load_dotenv()
@@ -19,12 +19,20 @@ user_temp_data = {}
 MAX_MESSAGE_LENGTH = 4000
 
 def send_long_message(chat_id, text):
+    """
+        Sends a potentially long text message to a specified chat by splitting it into
+        multiple messages if it exceeds the Telegram message length limit.
+    """
     for i in range(0, len(text), MAX_MESSAGE_LENGTH):
         bot.send_message(chat_id, text[i:i+MAX_MESSAGE_LENGTH])
 
 
 @bot.message_handler(commands=["start"])
 def start(message):
+    """
+        Handles the /start command.
+        Resets the user's status to 'chat' and sends a welcome message.
+    """
     user_status[message.from_user.id] = "chat"
     bot.send_message(message.chat.id, "Привіт! Я асистент студії LaserHouse, Чим можу допомогти?")
 
@@ -47,6 +55,10 @@ def handle_message(message):
 
 @bot.message_handler(func=lambda m: user_status.get(m.from_user.id) == "slot_selection")
 def handle_booking_slot_selection(message):
+    """
+        Handles general chat messages when the user's status is 'chat'.
+        Detects booking intent or uses an LLM to generate a reply.
+    """
     user_id = message.from_user.id
 
     date_range = parse_date_range(message.text)
@@ -149,5 +161,6 @@ def handle_booking_email(message):
     user_temp_data.pop(user_id, None)
 
 
-print("🤖 Бот працює")
-bot.infinity_polling()
+def run_bot():
+    print("🤖 Бот працює")
+    bot.infinity_polling()
