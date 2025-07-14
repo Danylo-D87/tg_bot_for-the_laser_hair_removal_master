@@ -1,0 +1,7 @@
+{
+  "workday_start": "09:00",
+  "workday_end": "20:00",
+  "break_start": "13:00",
+  "break_end": "14:00",
+  "timezone": "Europe/Kyiv"
+}
